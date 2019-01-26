@@ -9,4 +9,4 @@ nextcloudAdminPassword: test12345678
 serverHostname: mynextcloudserver
 
 # use https/ssl for Nextcloud
-sslEnable: true
+useSSL: true
