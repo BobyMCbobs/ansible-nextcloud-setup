@@ -1,0 +1,41 @@
+---
+- name: Add firewalld service rules
+  command: firewall-cmd --permanent --add-service={{ item.service }}
+  with_items:
+    - { service: 'http' }
+    - { service: 'https' }
+    - { service: 'mdns' }
+  when: ansible_facts['os_family'] == "openSUSE Leap"
+  
+- name: Add UFW service rules
+  ufw:
+    rule: allow
+    port: '{{ item.service }}'
+    state: enabled
+    policy: allow
+  with_items:
+    - { service: 80 }
+    - { service: 443 }
+    - { service: 5353 }
+  when: ansible_facts['os_family'] == "Ubuntu" or ansible_facts['os_family'] == "Debian"
+
+- name: Reload firewalld
+  command: firewall-cmd --reload
+  when: ansible_facts['os_family'] == "openSUSE Leap"
+
+- name: Reload UFW
+  command: ufw reload
+  when: ansible_facts['os_family'] == "Ubuntu" or ansible_facts['os_family'] == "Debian"
+  
+- name: Set hostname
+  command: hostnamectl set-hostname {{ serverHostname }}
+  
+- name: Enable snapd
+  service:
+    name: snapd
+    enabled: yes
+    state: started
+   
+- name: Reboot
+  reboot:
+  when: ansible_facts['os_family'] == "openSUSE Leap"    

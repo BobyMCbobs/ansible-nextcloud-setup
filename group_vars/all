@@ -1,0 +1,9 @@
+---
+# nextcloud's admin's username
+nextcloudAdminUsername: admin
+
+# nextcloud's admin's password
+nextcloudAdminPassword: test12345678
+
+# set a hostname for the server
+serverHostname: mynextcloudserver

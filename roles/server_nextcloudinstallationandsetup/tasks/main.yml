@@ -1,0 +1,16 @@
+---
+- name: Install nextcloud from snapcraft
+  shell: snap install nextcloud
+    
+- name: Setup nextcloud on the system
+  shell: snap run nextcloud.manual-install {{ nextcloudAdminUsername }} {{ nextcloudAdminPassword }}
+  
+- name: Setup a self-signed SSL cert
+  shell: snap run nextcloud.enable-https self-signed
+  
+- name: Add hostname as trusted domain
+  shell: snap run nextcloud.occ config:system:set trusted_domains 1 --value={{ serverHostname }}
+  shell: snap run nextcloud.occ config:system:set trusted_domains 2 --value={{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}
+  
+- name: Restart snap
+  shell: snap restart nextcloud

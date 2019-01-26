@@ -1,0 +1,9 @@
+---
+ - name: Install Nextcloud via snap
+   hosts: nextcloudservers
+   remote_user: root
+   roles:
+     - server_softwareinstallation
+     - server_systemcfg
+     - server_nextcloudinstallationandsetup
+     - finalisation
