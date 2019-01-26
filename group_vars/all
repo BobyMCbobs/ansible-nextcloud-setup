@@ -7,3 +7,6 @@ nextcloudAdminPassword: test12345678
 
 # set a hostname for the server
 serverHostname: mynextcloudserver
+
+# use https/ssl for Nextcloud
+sslEnable: true
