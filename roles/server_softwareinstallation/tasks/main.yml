@@ -22,10 +22,12 @@
     name:
       - snapd
       - kernel-default
+      - expect
   when: ansible_facts['os_family'] == "openSUSE Leap"
 
 - name: Install Programs (Debian or Ubuntu)
   apt:
     name:
       - snapd
+      - expect
   when: ansible_facts['os_family'] == "Ubuntu" or ansible_facts['os_family'] == "Debian"

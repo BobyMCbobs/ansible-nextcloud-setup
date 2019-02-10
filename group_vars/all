@@ -8,5 +8,13 @@ nextcloudAdminPassword: test12345678
 # set a hostname for the server
 serverHostname: mynextcloudserver
 
+# if the server has a [sub] domain address, provide it here, otherwise leave it blank
+serverDomain:
+
 # use https/ssl for Nextcloud
-useSSL: true
+useSSL_selfSigned: false
+
+# use https/ssl for Nextcloud
+useSSL_letsEncrypt: true
+# a recovery email for your lets encrypt cert
+useSSL_letsEncrypt_recoveryEmail: 

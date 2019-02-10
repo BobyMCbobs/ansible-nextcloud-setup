@@ -7,11 +7,19 @@
   
 - name: Setup a self-signed SSL cert
   shell: snap run nextcloud.enable-https self-signed
-  when: useSSL == true
+  when: useSSL_selfSigned == true
+
+- name: Setup a lets-encrypt SSL cert
+  shell: expect -c "spawn /snap/bin/nextcloud.enable-https lets-encrypt; expect -exact \"Have you met these requirements? (y/n) \"; send \"y\r\"; expect \"Please enter an email address (for urgent notices or key recovery)\"; send \"{{ useSSL_letsEncrypt_recoveryEmail }}\r\"; expect \"Please enter your domain name(s) (space-separated)\"; send \"{{ serverDomain }}\r\"; expect eof"
+  when: useSSL_letsEncrypt == true
   
 - name: Add hostname as trusted domain
   shell: snap run nextcloud.occ config:system:set trusted_domains 1 --value={{ serverHostname }}
   shell: snap run nextcloud.occ config:system:set trusted_domains 2 --value={{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}
   
+- name: Add [sub] domain name as a trusted domain
+  shell: snap run nextcloud.occ config:system:set trusted_domains 3 --value={{ serverDomain }}
+  when: serverDomain.stdout != ""
+
 - name: Restart snap
   shell: snap restart nextcloud
