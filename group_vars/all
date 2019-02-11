@@ -12,9 +12,9 @@ serverHostname: mynextcloudserver
 serverDomain:
 
 # use https/ssl for Nextcloud
-useSSL_selfSigned: false
+useSSL_selfSigned: true
 
 # use https/ssl for Nextcloud
-useSSL_letsEncrypt: true
+useSSL_letsEncrypt: false
 # a recovery email for your lets encrypt cert
 useSSL_letsEncrypt_recoveryEmail: 

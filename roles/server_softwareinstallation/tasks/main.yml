@@ -1,13 +1,7 @@
 ---   
 - name: Add repo
   shell: zypper addrepo --refresh https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.0 snappy
-  when: ansible_facts['os_family'] == "openSUSE Leap"
-  
-- name: Refresh keys
   shell: zypper --gpg-auto-import-keys refresh
-  when: ansible_facts['os_family'] == "openSUSE Leap"
-  
-- name: Update packages from snappy repo
   shell: zypper dup --from snappy
   when: ansible_facts['os_family'] == "openSUSE Leap"
 
