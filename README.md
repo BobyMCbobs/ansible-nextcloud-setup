@@ -11,3 +11,4 @@ Make sure you modify variables in `group_vars/all` to configure it how you like.
 
 ## Usage
 `ansible-playbook site.yml`  
+or for local `hosts` use `ansible-playbook -i hosts site.yml`
