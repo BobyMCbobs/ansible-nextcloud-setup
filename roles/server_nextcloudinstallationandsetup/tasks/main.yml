@@ -14,9 +14,9 @@
   when: useSSL_letsEncrypt == true
   
 - name: Add hostnames, domains, and IP addresses as trusted domains {1..3}
-  shell: snap run nextcloud.occ config:system:set trusted_domains 1 --value={{ serverHostname }}
-  shell: snap run nextcloud.occ config:system:set trusted_domains 2 --value={{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}
-  shell: snap run nextcloud.occ config:system:set trusted_domains 3 --value={{ serverDomain }}
+  shell: snap run nextcloud.occ config:system:set trusted_domains 1 --value="$(hostname)"
+  shell: snap run nextcloud.occ config:system:set trusted_domains 2 --value="$(hostname -i)"
+  shell: snap run nextcloud.occ config:system:set trusted_domains 3 --value="{{ serverDomain }}"
 
 - name: Restart snap
   shell: snap restart nextcloud

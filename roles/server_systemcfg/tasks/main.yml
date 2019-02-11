@@ -36,6 +36,6 @@
     enabled: yes
     state: started
    
-- name: Reboot
+- name: Reboot server
   reboot:
   when: ansible_facts['os_family'] == "openSUSE Leap"    
