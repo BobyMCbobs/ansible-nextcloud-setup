@@ -5,7 +5,7 @@
     - { service: 'http' }
     - { service: 'https' }
     - { service: 'mdns' }
-  when: ansible_facts['os_family'] == "openSUSE Leap"
+  when: ansible_facts['os_family'] == "openSUSE Leap" or ansible_facts['os_family'] == "Suse"
   
 - name: Add UFW service rules
   ufw:
@@ -21,7 +21,7 @@
 
 - name: Reload firewalld
   command: firewall-cmd --reload
-  when: ansible_facts['os_family'] == "openSUSE Leap"
+  when: ansible_facts['os_family'] == "openSUSE Leap" or ansible_facts['os_family'] == "Suse"
 
 - name: Reload UFW
   command: ufw reload
@@ -38,4 +38,4 @@
    
 - name: Reboot server
   reboot:
-  when: ansible_facts['os_family'] == "openSUSE Leap"    
+  when: ansible_facts['os_family'] == "openSUSE Leap" or ansible_facts['os_family'] == "Suse"

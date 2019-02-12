@@ -1,25 +1,42 @@
 ---   
-- name: Add repo
-  shell: zypper addrepo --refresh https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.0 snappy
-  shell: zypper --gpg-auto-import-keys refresh
-  shell: zypper dup --from snappy
-  when: ansible_facts['os_family'] == "openSUSE Leap"
+- name: Add snappy repo
+  zypper_repository:
+    name: snappy
+    repo: https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.0
+    state: present
+    autorefresh: yes
+    runrefresh: yes
+    auto_import_keys: yes
+    enabled: yes
+  when: ansible_facts['os_family'] == "openSUSE Leap" or ansible_facts['os_family'] == "Suse"
 
-- name: Upgrade packages
+- name: Upgrade packages [openSUSE]
   zypper:
     name: "*"
     state: latest
-  when: ansible_facts['os_family'] == "openSUSE Leap"
+  when: ansible_facts['os_family'] == "openSUSE Leap" or ansible_facts['os_family'] == "Suse"
 
-- name: Install Programs (openSUSE)
+- name: Upgrade packages [Ubuntu/Debian]
+  apt:
+    name: "*"
+    state: latest
+  when: ansible_facts['os_family'] == "Ubuntu" or ansible_facts['os_family'] == "Debian"
+
+- name: Remove default kernel (SUSE)
+  zypper:
+    name: kernel-default-base
+    state: absent
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Install Packages (openSUSE)
   zypper:
     name:
       - snapd
       - kernel-default
       - expect
-  when: ansible_facts['os_family'] == "openSUSE Leap"
+  when: ansible_facts['os_family'] == "openSUSE Leap" or ansible_facts['os_family'] == "Suse"
 
-- name: Install Programs (Debian or Ubuntu)
+- name: Install Packages (Debian or Ubuntu)
   apt:
     name:
       - snapd

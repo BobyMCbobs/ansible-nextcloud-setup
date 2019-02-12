@@ -1,3 +1,4 @@
 ---
 - name: Reboot server
   reboot:
+  when: rebootOnceFinshed == true

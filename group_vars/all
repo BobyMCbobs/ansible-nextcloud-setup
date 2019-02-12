@@ -8,6 +8,9 @@ nextcloudAdminPassword: test12345678
 # set a hostname for the server
 serverHostname: mynextcloudserver
 
+# reboot as the last step
+rebootOnceFinshed: true
+
 # if the server has a [sub] domain address, provide it here, otherwise leave it blank
 serverDomain:
 
